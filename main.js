@@ -1,42 +1,65 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
-const path = require("path");
+// const { app, BrowserWindow, ipcMain } = require("electron");
+// const path = require("path");
+
+// function createWindow() {
+//   const win = new BrowserWindow({
+//     width: 1200,
+//     height: 800,
+//     webPreferences: {
+//       preload: path.join(__dirname, "preload.js"),
+//       contextIsolation: true,
+//       nodeIntegration: false,
+//     },
+//   });
+
+//   ipcMain.handle("ping", () => "pong");
+
+//   let counter = 0;
+//   ipcMain.handle("update-counter", (event, arg) => {
+//     if (arg === "increment") {
+//       counter++;
+//     } else if (arg === "decrement") {
+//       counter--;
+//     }
+//     return counter;
+//   });
+
+//   // During development: load your local server
+//   win.loadFile("index.html");
+
+//   // Optional: open DevTools
+//   win.webContents.openDevTools();
+// }
+
+// app.whenReady().then(createWindow);
+
+// app.on("window-all-closed", () => {
+//   if (process.platform !== "darwin") app.quit();
+// });
+
+// app.on("activate", () => {
+//   if (BrowserWindow.getAllWindows().length === 0) createWindow();
+// });
+
+const { app, BrowserWindow } = require('electron');
+const path = require('path');
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    width: 800,
+    height: 600,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
-      contextIsolation: true,
-      nodeIntegration: false,
+      preload: path.join(__dirname, 'preload.js'),
     },
   });
 
-  ipcMain.handle("ping", () => "pong");
+  const indexPath = path.join(__dirname, 'react-app/dist/index.html');
+  console.log('Loading:', indexPath);
 
-  let counter = 0;
-  ipcMain.handle("update-counter", (event, arg) => {
-    if (arg === "increment") {
-      counter++;
-    } else if (arg === "decrement") {
-      counter--;
-    }
-    return counter;
-  });
+  win.loadFile(indexPath);
 
-  // During development: load your local server
-  win.loadFile("index.html");
-
-  // Optional: open DevTools
+  // Open DevTools for debugging
   win.webContents.openDevTools();
 }
 
 app.whenReady().then(createWindow);
-
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") app.quit();
-});
-
-app.on("activate", () => {
-  if (BrowserWindow.getAllWindows().length === 0) createWindow();
-});

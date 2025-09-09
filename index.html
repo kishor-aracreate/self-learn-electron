@@ -1,20 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <meta
-      http-equiv="X-Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <title>Hello from Electron renderer!</title>
-  </head>
-  <body>
-    <h1>Hello from Electron renderer!</h1>
-    <p>👋</p>
-  </body>
+    <head>
+        <title>Electron Context Bridge</title>
+    </head>
+    <body>
+        <h1>Electron Context Bridge Example</h1>
+        <p>
+            Open the developer console to see the message from the main process.
+        </p>
+        <button id="increment-btn">Increment</button>
+        <button id="decrement-btn">Decrement</button>
+        <p>Value: <span id="counter-value">0</span></p>
+        <script src="./renderer.js"></script>
+    </body>
 </html>

@@ -41,25 +41,29 @@
 //   if (BrowserWindow.getAllWindows().length === 0) createWindow();
 // });
 
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+const { app, BrowserWindow, ipcMain, shell } = require("electron");
+const path = require("path");
 
 function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, "preload.js"),
     },
   });
 
-  const indexPath = path.join(__dirname, 'react-app/dist/index.html');
-  console.log('Loading:', indexPath);
+  const indexPath = path.join(__dirname, "react-app/dist/index.html");
+  console.log("Loading:", indexPath);
 
   win.loadFile(indexPath);
 
   // Open DevTools for debugging
   win.webContents.openDevTools();
+
+  ipcMain.handle("open-external-link", async (event, url) => {
+    await shell.openExternal(url);
+  });
 }
 
 app.whenReady().then(createWindow);
